@@ -1,0 +1,35 @@
+    """Create a Razorpay order. Returns dict with razorpayOrderId, amount, currency, keyId, simulated."""
+    print(f"DEBUG: Razorpay key_id: {os.environ.get('RAZORPAY_KEY_ID', 'NOT_SET')!r}")
+    print(f"DEBUG: keys_configured(): {keys_configured()}")
+    if not keys_configured():
+        return {
+            "razorpayOrderId": f"order_simulated_{int(time.time() * 1000)}",
+            "amount": round(amount_rupees * 100),
+            "currency": "INR",
+            "keyId": "rzp_test_SIMULATED",
+            "simulated": True,
+        }
+
+    key_id = os.environ["RAZORPAY_KEY_ID"]
+    key_secret = os.environ["RAZORPAY_KEY_SECRET"]
+    print("DEBUG: Using real Razorpay API")
+    resp = requests.post(
+        f"{RAZORPAY_BASE_URL}/orders",
+        auth=(key_id, key_secret),
+        json={
+            "amount": round(amount_rupees * 100),
+            "currency": "INR",
+            "receipt": order_number[:40],
+            "notes": {"orderId": order_id, "customerName": customer_name, "mobile": mobile},
+        },
+        timeout=15,
+    )
+    resp.raise_for_status()
+    data = resp.json()
+    return {
+        "razorpayOrderId": data["id"],
+        "amount": data["amount"],
+        "currency": data["currency"],
+        "keyId": key_id,
+        "simulated": False,
+    }

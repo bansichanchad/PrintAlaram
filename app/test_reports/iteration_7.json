@@ -1,0 +1,34 @@
+{
+  "summary": "Tested catalog expansion from 1 to 4 products (card-1..card-4) and the generic data-driven EnvelopePreview refactor. Backend: updated test_printalaram_api.py for 4-product catalog, 2 categories, layout config assertions, and customization/order creation for all new productIds - all 26 tests pass. Frontend: homepage grid shows all 4 cards with correct names/prices/ratings; card-1 regression confirmed (no photo upload, text well positioned); card-2/3/4 customize pages show photo upload UI and name/family text positions correctly with no overlap of baked-in static text (e.g. card-3's 'With Warm Regards' header) and good contrast. Product detail slide toggle works for card-3. Full order flow (customize->checkout->COD->home redirect->WhatsApp toast) verified working for card-4. Mobile (390px) grid and customize page render without overflow. FOUND A VISUAL DESIGN ISSUE: for all 3 new products (card-2, card-3, card-4), the configured 'photo' rectangle in layout does not fully cover the baked-in illustrated sample-couple/person graphic already present in the artwork - uploading a real photo results in the uploaded image only partially covering the illustration, leaving parts of the illustrated person(s) visible around/behind the uploaded photo box (see screenshots). This is a visual overlap issue on the photo area specifically (text positioning itself is fine).",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [
+      {"component": "EnvelopePreview photo rectangle (card-2/3/4)", "issue": "layout.photo top/left/width/height does not align with/fully cover the baked-in illustrated sample-couple graphic in wedding-green-1.jpg, wedding-brown-1.jpg, wedding-orange-1.jpg artwork. After uploading a real photo, parts of the illustrated person(s) remain visible outside the uploaded photo box, causing a visual clash (illustration + real photo both partially visible).", "selector": "customize-photo-file-input preview area", "priority": "MEDIUM"}
+    ],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Customize page - card-2/3/4 photo area", "issues": ["Photo rectangle size/position should be widened/adjusted (or the baked illustration should be removed from source art) to fully cover the illustrated couple so uploaded photos don't visually clash with leftover illustration edges"]}
+    ]
+  },
+  "test_report_links": ["/app/backend/tests/test_printalaram_api.py", "/app/test_reports/pytest/pytest_results.xml"],
+  "action_items": [
+    "Adjust layout.photo rect (top/left/width/height) for card-2, card-3, card-4 in catalog.py so it fully covers the illustrated sample-couple/person graphic baked into wedding-green-1.jpg / wedding-brown-1.jpg / wedding-orange-1.jpg - currently the photo box only partially overlaps, leaving illustration edges visible around uploaded photos (verified via screenshots at /app/.screenshots/customize_card2.png, customize_card3.png, customize_card4.png)"
+  ],
+  "critical_code_review_comments": [
+    "EnvelopePreview.js refactor to be fully data-driven via layout prop is clean, well-scoped, and file sizes are within limits.",
+    "catalog.py layout config is readable; each product's photo rect just needs re-measurement against the actual artwork's illustrated-couple bounding box.",
+    "Name/family text positioning is correctly tuned for all 4 products - no overlap with static baked text (verified card-3's 'With Warm Regards' vs name/family, and card-1 regression) and text contrast/readability is good on all backgrounds (text-shadow used consistently).",
+    "No console errors observed during testing besides benign Next.js dev warnings."
+  ],
+  "updated_files": ["/app/backend/tests/test_printalaram_api.py"],
+  "success_rate": {"backend": "100% (26/26)", "frontend": "~90% (photo-rect visual overlap issue found; all other flows/pages pass)"},
+  "test_credentials": "None required - no auth in this app",
+  "seed_data_creation": "Created TEST_-prefixed customizations and one COD order (card-4, TEST_Vikram Patel/TEST_Patel) via UI flow during testing - not cleaned up (isolated dev-DB test data).",
+  "retest_needed": true,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Confirmed: (1) GET /api/products returns exactly 4 products with correct photoUploadEnabled flags and layout configs (backend 100% pass), (2) homepage grid shows all 4 cards correctly, (3) card-1 regression intact - no photo UI, text positioned well, (4) card-2/3/4 customize pages show photo upload + correctly-positioned name/family text with good contrast and no text-overlap issues, (5) full COD order flow verified for card-4 end-to-end including WhatsApp redirect toast, (6) mobile 390px layout has no overflow. ONE VISUAL ISSUE found and not fixed (needs main agent's design judgment): the photo-rectangle placement for card-2/3/4 doesn't fully mask the illustrated sample-couple graphic baked into the source artwork images, so uploaded photos appear to partially overlap/clash with leftover illustration. Screenshots saved under /app/.screenshots/ (customize_card2.png, customize_card3.png, customize_card4.png) for reference.",
+  "rca_of_the_issue": "The layout.photo dict values (top/left/width/height) for card-2/3/4 in catalog.py were likely eyeballed against the overall card design but not precisely measured against the exact pixel bounding box of the illustrated sample-couple/person graphic already printed in the artwork JPGs. Fix requires either (a) re-measuring/adjusting the photo rect to fully cover the illustration bounding box, or (b) requesting/using cleaner source artwork without a baked-in illustrated person that needs full coverage."
+}

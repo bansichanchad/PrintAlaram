@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(YARN_CACHE_FOLDER=\"D:\\\\work space\\\\printalaram\\\\app\\\\frontend\\\\yarn-cache\" yarn dev *)",
+      "Bash(YARN_CACHE_FOLDER=\".\\\\yarn-cache\" yarn dev)",
+      "Bash(yarn install *)",
+      "Bash(set YARN_CACHE_FOLDER=D:\\\\work space\\\\printalaram\\\\app\\\\frontend\\\\yarn-cache)",
+      "Bash(cd /d \"D:\\\\work space\\\\printalaram\\\\app\\\\frontend\")",
+      "Bash(npx next *)",
+      "Bash(tasklist)",
+      "Bash(findstr 2883)",
+      "Bash(timeout 5 bash -c \"cd app/backend && source venv/Scripts/activate && python server.py\" &)",
+      "Bash(cd /d D:\\\\work\\\\space\\\\printalaram\\\\app\\\\backend)",
+      "Bash(venv\\\\Scripts\\\\python.exe server.py)",
+      "Bash(netstat -ano)",
+      "Bash(findstr :8000)",
+      "Bash(findstr python *)",
+      "Bash(tasklist /v)",
+      "Bash(findstr server.py)",
+      "Bash(C-c *)",
+      "Bash(curl -s http://localhost:3000)",
+      "Bash(/c/Windows/System32/netstat.exe -ano)",
+      "Bash(/c/Windows/System32/findstr.exe \":8000\")",
+      "Bash(/c/Windows/System32/findstr.exe \"LISTENING\")"
+    ]
+  }
+}

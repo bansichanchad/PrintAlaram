@@ -1,0 +1,93 @@
+# Dependencies
+node_modules/
+/node_modules
+/.pnp
+.pnp.js
+yarn.lock
+package-lock.json
+.pnpmfile.js
+.package-lock.json
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# Build outputs
+/dist
+/build
+/out
+/.next
+/coverage
+/.cache
+/.parcel-cache
+/.webpack
+/.vuepress/dist
+/.nuxt/dist
+
+# Environment variables
+.env
+.env.*
+!.env.example
+!.env.sample
+!env.example
+!env.sample
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+debug.log
+*.debug
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+lost+found
+.data
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+pip-log.txt
+pip-delete-this-directory.txt
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS and system files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
